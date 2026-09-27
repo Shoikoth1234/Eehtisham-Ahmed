@@ -1,0 +1,6 @@
+{
+  "name": "FigBits | Video Editor & Motion Designer",
+  "description": "High-impact video editing, motion graphics, and graphic design portfolio featuring showreels, client success stories, and performance edits.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

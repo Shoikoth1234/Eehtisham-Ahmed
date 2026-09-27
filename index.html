@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      (function() {
+        try {
+          var originalFetch = window.fetch;
+          var _fetch = originalFetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return _fetch;
+            },
+            set: function(fn) {
+              _fetch = fn;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          // Silent fallback if window.fetch cannot be redefined
+        }
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FigBits | Video Editor &amp; Motion Designer</title>
+    <meta name="description" content="High-impact video editing, motion graphics, and graphic design portfolio featuring showreels, client success stories, and performance edits." />
+    <meta property="og:title" content="FigBits | Video Editor &amp; Motion Designer" />
+    <meta property="og:description" content="High-impact video editing, motion graphics, and graphic design portfolio featuring showreels, client success stories, and performance edits." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#08080a] text-[#ededef] selection:bg-[#ccff00] selection:text-black antialiased overflow-x-hidden min-h-screen">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

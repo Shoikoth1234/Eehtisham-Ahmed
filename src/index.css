@@ -1,0 +1,247 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Inter-Numbers';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf') format('truetype');
+  unicode-range: U+0030-0039, U+0024, U+0025, U+002B, U+002D, U+002C, U+002E, U+002F, U+003A, U+007E, U+00A3, U+20AC;
+}
+
+@font-face {
+  font-family: 'Inter-Numbers';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf') format('truetype');
+  unicode-range: U+0030-0039, U+0024, U+0025, U+002B, U+002D, U+002C, U+002E, U+002F, U+003A, U+007E, U+00A3, U+20AC;
+}
+
+@font-face {
+  font-family: 'Inter-Numbers';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf') format('truetype');
+  unicode-range: U+0030-0039, U+0024, U+0025, U+002B, U+002D, U+002C, U+002E, U+002F, U+003A, U+007E, U+00A3, U+20AC;
+}
+
+@font-face {
+  font-family: 'Inter-Numbers';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuDyYMZg.ttf') format('truetype');
+  unicode-range: U+0030-0039, U+0024, U+0025, U+002B, U+002D, U+002C, U+002E, U+002F, U+003A, U+007E, U+00A3, U+20AC;
+}
+
+@font-face {
+  font-family: 'Inter-Numbers';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuBWYMZg.ttf') format('truetype');
+  unicode-range: U+0030-0039, U+0024, U+0025, U+002B, U+002D, U+002C, U+002E, U+002F, U+003A, U+007E, U+00A3, U+20AC;
+}
+
+@layer base {
+  :root {
+    --font-sans: 'Inter-Numbers', 'Syne', system-ui, -apple-system, sans-serif;
+    --font-display: 'Inter-Numbers', 'Syne', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: 'Inter-Numbers', 'Syne', system-ui, -apple-system, sans-serif;
+    background-color: #08080a;
+    color: #e5e5e7;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6, p, span, a, button, input, select, textarea {
+    font-family: 'Inter-Numbers', 'Syne', system-ui, -apple-system, sans-serif;
+  }
+
+  .font-display {
+    font-family: 'Inter-Numbers', 'Syne', system-ui, sans-serif;
+  }
+
+  .font-inter {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  }
+
+  code, .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+/* Fractal Glass effect */
+.fractal-glass {
+  background: rgba(14, 14, 18, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(204, 255, 0, 0.05);
+}
+
+.fractal-glass-card {
+  background: linear-gradient(135deg, rgba(25, 25, 32, 0.6) 0%, rgba(12, 12, 16, 0.75) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.fractal-glass-card:hover {
+  border-color: rgba(204, 255, 0, 0.25);
+  box-shadow: 0 12px 40px -10px rgba(204, 255, 0, 0.12);
+}
+
+/* Apple-style Trending Liquid & Fractal Glass Navbar */
+.apple-fractal-glass {
+  background: rgba(6, 6, 10, 0.32);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4),
+    0 16px 36px -8px rgba(0, 0, 0, 0.5),
+    0 0 24px -6px rgba(204, 255, 0, 0.05);
+}
+
+.apple-fractal-glass-scrolled {
+  background: rgba(6, 6, 10, 0.48);
+  backdrop-filter: blur(16px) saturate(190%);
+  -webkit-backdrop-filter: blur(16px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.5),
+    0 20px 45px -10px rgba(0, 0, 0, 0.65),
+    0 0 28px -5px rgba(204, 255, 0, 0.08);
+}
+
+/* Apple Glass Shimmer Animation */
+@keyframes glass-shimmer {
+  0% { transform: translateX(-100%) rotate(25deg); }
+  100% { transform: translateX(200%) rotate(25deg); }
+}
+
+.animate-glass-shimmer {
+  animation: glass-shimmer 8s ease-in-out infinite;
+}
+
+/* Prismatic refractive border line */
+.prismatic-border {
+  position: relative;
+}
+
+.prismatic-border::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(204, 255, 0, 0.4) 30%,
+    rgba(147, 51, 234, 0.3) 70%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Neon lime glow text */
+.text-lime-glow {
+  color: #ccff00;
+  text-shadow: 0 0 20px rgba(204, 255, 0, 0.45);
+}
+
+/* Subtle motion overlay scanlines */
+.scanlines-overlay {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #08080a;
+}
+::-webkit-scrollbar-thumb {
+  background: #23232a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #373743;
+}
+
+/* Hero copy / Statement Banner */
+.hero-copy .gradient-text {
+  background: linear-gradient(90deg, #64748b 0%, #FFFFFF 25%, #FFFFFF 75%, #64748b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* Gooey Cursor Fluid Motion (Brand Color #ccff00) */
+:root {
+  --cursor-size: 26px;
+}
+
+#cursor {
+  position: fixed;
+  top: calc(var(--cursor-size) * -0.5);
+  left: calc(var(--cursor-size) * -0.5);
+  pointer-events: none;
+  mix-blend-mode: difference;
+  filter: url(#goo);
+  z-index: 99999;
+}
+
+.cursor-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  border-radius: var(--cursor-size);
+  transform-origin: center center;
+  background-color: #ccff00;
+  box-shadow: 0 0 10px rgba(204, 255, 0, 0.5);
+}
+
+/* Continuous Marquee Ticker */
+@keyframes marquee-scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
