@@ -7,18 +7,11 @@ interface AboutMeSectionProps {
   onBookCallClick?: () => void;
 }
 
-const DEFAULT_PORTRAIT = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop';
-const LOCAL_FILENAME = '/Social Post Eehtisham Ahmed 2.jpg';
+const ABOUT_ME_IMAGE = 'https://i.postimg.cc/WbXFqhQP/Social-Post-Eehtisham-Ahmed.jpg';
+const FALLBACK_PORTRAIT = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop';
 
 export default function AboutMeSection({ onShowreelClick, onBookCallClick }: AboutMeSectionProps) {
-  // Preserve the user's selected/uploaded image from localStorage or local asset
-  const [profileImg, setProfileImg] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('eehtisham_custom_photo');
-      if (saved) return saved;
-    }
-    return LOCAL_FILENAME;
-  });
+  const [profileImg, setProfileImg] = useState<string>(ABOUT_ME_IMAGE);
 
   return (
     <section id="about" className="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden">
@@ -37,8 +30,8 @@ export default function AboutMeSection({ onShowreelClick, onBookCallClick }: Abo
                     src={profileImg}
                     alt="Eehtisham - Senior Video Editor"
                     onError={() => {
-                      if (profileImg !== DEFAULT_PORTRAIT) {
-                        setProfileImg(DEFAULT_PORTRAIT);
+                      if (profileImg !== FALLBACK_PORTRAIT) {
+                        setProfileImg(FALLBACK_PORTRAIT);
                       }
                     }}
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 filter contrast-[1.05]"
