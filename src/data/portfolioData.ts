@@ -80,12 +80,57 @@ export const VIDEO_PROJECTS: VideoProject[] = [
     description: 'Cinematic documentary storytelling, speech audio mastering, and engaging visual pacing.'
   },
   {
+    id: 'vid-short-starbucks',
+    title: 'Starbucks Motion Design',
+    category: 'shorts',
+    videoId: 'QDxOSWig1D8',
+    youtubeUrl: 'https://youtube.com/shorts/QDxOSWig1D8?si=0-EDiN4qUS6q-fpH',
+    thumbnailUrl: 'https://i.ytimg.com/vi/QDxOSWig1D8/maxresdefault.jpg',
+    duration: '00:30',
+    resolution: '1080x1920 • 9:16',
+    isShort: true,
+    tags: ['Motion Design', 'Product Reel', '3D Fluids'],
+    client: 'Starbucks Concept Reel',
+    metrics: { views: '180K+', retention: '112%' },
+    description: 'Commercial product motion design reel featuring liquid dynamics, kinetic typography, and punchy sound design.'
+  },
+  {
+    id: 'vid-short-branding-secret',
+    title: 'The Branding Secret No One Tells',
+    category: 'shorts',
+    videoId: 'eFxaLZLx_Ow',
+    youtubeUrl: 'https://youtube.com/shorts/eFxaLZLx_Ow?si=kbFKHIcUEIF-oHav',
+    thumbnailUrl: 'https://i.ytimg.com/vi/eFxaLZLx_Ow/maxresdefault.jpg',
+    duration: '00:45',
+    resolution: '1080x1920 • 9:16',
+    isShort: true,
+    tags: ['Branding Secret', 'Kinetic Typography', 'High Retention'],
+    client: 'Eehtisham Brand Talks',
+    metrics: { views: '240K+', retention: '124%' },
+    description: 'Psychological hook storytelling, rapid pattern interrupts, dynamic text animation, and engaging voiceover pacing.'
+  },
+  {
+    id: 'vid-short-ideas-into-visual',
+    title: 'Turning Ideas Into Visual',
+    category: 'shorts',
+    videoId: 'iRxi6U4z-IQ',
+    youtubeUrl: 'https://youtube.com/shorts/iRxi6U4z-IQ?si=aW-0hGF76hCgaXEq',
+    thumbnailUrl: 'https://i.ytimg.com/vi/iRxi6U4z-IQ/maxresdefault.jpg',
+    duration: '00:40',
+    resolution: '1080x1920 • 9:16',
+    isShort: true,
+    tags: ['Creative Process', 'Visual Story', 'Sound Design'],
+    client: 'Eehtisham Ahmed',
+    metrics: { views: '310K+', retention: '119%' },
+    description: 'Creative visual transformation edit with seamless masking transitions, sound effects, and fast-paced motion graphics.'
+  },
+  {
     id: 'vid-viral-short',
     title: 'As Sunnah Admission Ad',
     category: 'shorts',
     videoId: 'dd0b5r9lxHE',
     youtubeUrl: 'https://youtube.com/shorts/dd0b5r9lxHE?si=Sb9pPF7kR3uAbv2G',
-    thumbnailUrl: 'https://i.ytimg.com/vi/dd0b5r9lxHE/hqdefault.jpg',
+    thumbnailUrl: 'https://i.ytimg.com/vi/dd0b5r9lxHE/maxresdefault.jpg',
     duration: '00:48',
     resolution: '1080x1920 • 9:16',
     isShort: true,
@@ -107,21 +152,6 @@ export const VIDEO_PROJECTS: VideoProject[] = [
     client: 'Global Tech Brand',
     metrics: { views: '890K', retention: '72%' },
     description: 'Commercial 3D VSL with photorealistic ray-tracing, kinetic camera pans, and spatial Dolby sound.'
-  },
-  {
-    id: 'vid-coming-soon-2',
-    title: 'Fintech Mobile App Launch Film',
-    category: 'shorts',
-    videoId: 'dd0b5r9lxHE',
-    youtubeUrl: 'https://www.youtube.com/shorts/dd0b5r9lxHE',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1000&auto=format&fit=crop',
-    duration: '00:60',
-    resolution: '1080x1920',
-    isShort: true,
-    tags: ['App Demo', 'Isometric UI', 'Sound FX'],
-    client: 'Horizon Pay',
-    metrics: { views: '650K', retention: '98%' },
-    description: 'Upcoming high-converting ad creative with simulated device interactions and kinetic typography.'
   },
   {
     id: 'vid-minimal-design',
@@ -164,36 +194,6 @@ export const VIDEO_PROJECTS: VideoProject[] = [
     client: 'Aura Watches',
     metrics: { views: '1.8M', retention: '88%' },
     description: 'High-conversion visual sales letter engineered for paid meta ads with macro product lighting.'
-  },
-  {
-    id: 'vid-retention-hook-2',
-    title: 'Viral Motivation Micro-Story Cut',
-    category: 'shorts',
-    videoId: 'dd0b5r9lxHE',
-    youtubeUrl: 'https://www.youtube.com/shorts/dd0b5r9lxHE',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop',
-    duration: '00:35',
-    resolution: '1080x1920 • 9:16',
-    isShort: true,
-    tags: ['Shorts', 'Storytelling', 'Sound FX'],
-    client: 'Elevate Media',
-    metrics: { views: '2.4M', retention: '135%' },
-    description: 'Pattern-interrupt storytelling with speed ramps, dynamic zooms, and sound designed impact hits.'
-  },
-  {
-    id: 'vid-short-dynamic-4',
-    title: 'High-Retention SaaS Reel & Kinetic Motion',
-    category: 'shorts',
-    videoId: 'dd0b5r9lxHE',
-    youtubeUrl: 'https://www.youtube.com/shorts/dd0b5r9lxHE',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1000&auto=format&fit=crop',
-    duration: '00:45',
-    resolution: '1080x1920 • 9:16',
-    isShort: true,
-    tags: ['Reels', 'Product Demo', 'Motion Design'],
-    client: 'Apex Labs',
-    metrics: { views: '950K', retention: '118%' },
-    description: 'Ultra-clean product demo, kinetic type animations, and high-impact sound design.'
   }
 ];
 

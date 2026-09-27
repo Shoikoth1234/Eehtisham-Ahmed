@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ArrowRight, CheckCircle2, Youtube, Instagram, ArrowUp, Send, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
 import { SOCIAL_LINKS, BRAND_INFO } from '../data/portfolioData';
@@ -18,6 +18,46 @@ export default function Footer() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
   const { scrollTo } = useSmoothScroll();
+
+  // Mouse tracking state for cursor-following animated glow in newsletter card
+  const [mousePos, setMousePos] = useState<{ x: number; y: number; isHovered: boolean }>({
+    x: 0,
+    y: 0,
+    isHovered: false,
+  });
+  const [inputMousePos, setInputMousePos] = useState<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
+
+  const cardRef = useRef<HTMLDivElement>(null);
+  const inputWrapperRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      isHovered: true,
+    });
+
+    if (inputWrapperRef.current) {
+      const iRect = inputWrapperRef.current.getBoundingClientRect();
+      setInputMousePos({
+        x: e.clientX - iRect.left,
+        y: e.clientY - iRect.top,
+      });
+    }
+  };
+
+  const handleMouseEnter = () => {
+    setMousePos((prev) => ({ ...prev, isHovered: true }));
+  };
+
+  const handleMouseLeave = () => {
+    setMousePos((prev) => ({ ...prev, isHovered: false }));
+  };
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,46 +130,120 @@ export default function Footer() {
               </p>
             </div>
 
-            {/* Newsletter Field */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.03] border border-white/10 max-w-lg">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                  Subscribe to our newsletter
-                </span>
-                <span className="text-[11px] font-mono text-[#ccff00]">
-                  Weekly Tips
-                </span>
-              </div>
-              <p className="text-xs text-neutral-400 mb-4">
-                Get high-retention editing breakdowns, storytelling tactics, and creative insights delivered to your inbox.
-              </p>
+            {/* Newsletter Field with Interactive Mouse Move Glow */}
+            <div
+              ref={cardRef}
+              onMouseMove={handleMouseMove}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              className="relative p-5 sm:p-6 rounded-2xl bg-[#0e0e14] border border-white/10 max-w-lg overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.5)] transition-all duration-300 group"
+            >
+              {/* Primary Cursor-Following Radial Glow Effect */}
+              <div
+                className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full transition-opacity duration-300 ease-out"
+                style={{
+                  left: `${mousePos.x}px`,
+                  top: `${mousePos.y}px`,
+                  width: '380px',
+                  height: '380px',
+                  background:
+                    'radial-gradient(circle, rgba(204,255,0,0.22) 0%, rgba(204,255,0,0.08) 40%, rgba(0,255,180,0.03) 65%, transparent 75%)',
+                  filter: 'blur(50px)',
+                  opacity: mousePos.isHovered ? 1 : 0,
+                }}
+              />
 
-              {subscribed ? (
-                <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-[#ccff00]/10 border border-[#ccff00]/30 text-xs font-medium text-[#ccff00]">
-                  <CheckCircle2 className="w-4 h-4 shrink-0" />
-                  <span>Thank you! You have successfully subscribed.</span>
+              {/* Core Intense Neon Glow at Cursor Position */}
+              <div
+                className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full transition-opacity duration-200 ease-out"
+                style={{
+                  left: `${mousePos.x}px`,
+                  top: `${mousePos.y}px`,
+                  width: '160px',
+                  height: '160px',
+                  background:
+                    'radial-gradient(circle, rgba(204,255,0,0.4) 0%, rgba(204,255,0,0.12) 50%, transparent 80%)',
+                  filter: 'blur(25px)',
+                  opacity: mousePos.isHovered ? 1 : 0,
+                }}
+              />
+
+              {/* Interactive Cursor-Reactive Border Glow Highlight for the Newsletter Card */}
+              <div
+                className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300"
+                style={{
+                  opacity: mousePos.isHovered ? 1 : 0,
+                  background: `radial-gradient(380px circle at ${mousePos.x}px ${mousePos.y}px, rgba(204,255,0,0.38), transparent 45%)`,
+                  mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                  WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                  maskComposite: 'exclude',
+                  WebkitMaskComposite: 'xor',
+                  padding: '1.5px',
+                }}
+              />
+
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-white uppercase tracking-wider">
+                    Subscribe to our newsletter
+                  </span>
+                  <span className="text-[11px] font-mono text-[#ccff00]">
+                    Weekly Tips
+                  </span>
                 </div>
-              ) : (
-                <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2">
-                  <input
-                    type="email"
-                    required
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#ccff00] text-white placeholder:text-neutral-500 text-xs sm:text-sm outline-none transition-all"
-                  />
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    type="submit"
-                    className="px-5 py-2.5 rounded-xl bg-[#ccff00] hover:bg-[#d9ff33] text-black font-bold text-xs sm:text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 shrink-0 cursor-pointer shadow-[0_0_15px_rgba(204,255,0,0.3)]"
-                  >
-                    <span>Subscribe</span>
-                    <Send className="w-3.5 h-3.5" />
-                  </motion.button>
-                </form>
-              )}
+                <p className="text-xs text-neutral-400 mb-4">
+                  Get high-retention editing breakdowns, storytelling tactics, and creative insights delivered to your inbox.
+                </p>
+
+                {subscribed ? (
+                  <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-[#ccff00]/10 border border-[#ccff00]/30 text-xs font-medium text-[#ccff00]">
+                    <CheckCircle2 className="w-4 h-4 shrink-0" />
+                    <span>Thank you! You have successfully subscribed.</span>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2">
+                    {/* Input Container with Stroke Glow (interior has solid opaque background so internal glow stays out of the input box) */}
+                    <div
+                      ref={inputWrapperRef}
+                      className="relative flex-1 rounded-xl"
+                    >
+                      {/* Reactive Stroke Glow around the input border */}
+                      <div
+                        className="pointer-events-none absolute inset-0 rounded-xl transition-opacity duration-200 z-20"
+                        style={{
+                          opacity: mousePos.isHovered ? 1 : 0,
+                          background: `radial-gradient(160px circle at ${inputMousePos.x}px ${inputMousePos.y}px, rgba(204,255,0,0.75), rgba(204,255,0,0.2) 45%, transparent 70%)`,
+                          mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                          WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                          maskComposite: 'exclude',
+                          WebkitMaskComposite: 'xor',
+                          padding: '1.5px',
+                        }}
+                      />
+
+                      {/* Solid opaque input - completely blocks internal card glow, preserving clean text area */}
+                      <input
+                        type="email"
+                        required
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="relative z-10 w-full px-4 py-2.5 rounded-xl bg-[#0b0b10] border border-white/15 focus:border-[#ccff00] text-white placeholder:text-neutral-500 text-xs sm:text-sm outline-none transition-all shadow-[inset_0_1px_3px_rgba(0,0,0,0.6)]"
+                      />
+                    </div>
+
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      type="submit"
+                      className="relative z-10 px-5 py-2.5 rounded-xl bg-[#ccff00] hover:bg-[#d9ff33] text-black font-bold text-xs sm:text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 shrink-0 cursor-pointer shadow-[0_0_15px_rgba(204,255,0,0.3)]"
+                    >
+                      <span>Subscribe</span>
+                      <Send className="w-3.5 h-3.5" />
+                    </motion.button>
+                  </form>
+                )}
+              </div>
             </div>
           </div>
 

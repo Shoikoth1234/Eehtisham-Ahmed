@@ -32,10 +32,14 @@ export default function ProjectsShowcase({ onSelectVideo }: ProjectsShowcaseProp
     return true;
   });
 
-  // Ensure we have a pool of videos; if a category has fewer than 4, borrow from all projects to fill 4 per view
-  const displayVideos = categoryVideos.length >= 4 
-    ? categoryVideos 
-    : [...categoryVideos, ...VIDEO_PROJECTS.filter(v => v.category !== activeTab)].slice(0, 8);
+  const isShortsTab = activeTab === 'shorts';
+
+  // Ensure we have a pool of videos; if shorts, display only shorts (no landscape mixing)
+  const displayVideos = isShortsTab
+    ? categoryVideos
+    : categoryVideos.length >= 4 
+      ? categoryVideos 
+      : [...categoryVideos, ...VIDEO_PROJECTS.filter(v => v.category !== activeTab && !v.isShort)].slice(0, 8);
 
   // Group into pages of 4 videos (2 columns x 2 rows)
   const pageSize = 4;
@@ -58,8 +62,6 @@ export default function ProjectsShowcase({ onSelectVideo }: ProjectsShowcaseProp
     setActiveTab(tabId);
     setCurrentSlide(0);
   };
-
-  const isShortsTab = activeTab === 'shorts';
 
   return (
     <section id="projects" className="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden bg-[#060609]">
@@ -228,6 +230,13 @@ export default function ProjectsShowcase({ onSelectVideo }: ProjectsShowcaseProp
 
                         {/* Subtle Cinematic Vignette Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/40 opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
+
+                        {/* Top Subtle Project Title Badge */}
+                        <div className="absolute top-2.5 left-2.5 right-2.5 z-10 flex items-center justify-between pointer-events-none">
+                          <span className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-[10px] sm:text-[11px] font-semibold text-white/95 truncate max-w-[88%] shadow-md">
+                            {project.title}
+                          </span>
+                        </div>
 
                         {/* Centered Frosted Glass Play Button */}
                         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
