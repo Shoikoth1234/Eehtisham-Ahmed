@@ -41,29 +41,21 @@ export default function FractalGlassHeader({ onBookCallClick, onShowreelClick }:
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-2.5 sm:py-3.5 px-3 sm:px-6 md:px-8 pointer-events-none">
       <div className="max-w-6xl mx-auto pointer-events-auto">
-        {/* Apple Trending Style Fractal Glass Capsule */}
+        {/* Figma Fluid Glass Capsule */}
         <div
           id="fractal-glass-navbar"
           className={`relative rounded-2xl md:rounded-full transition-all duration-400 overflow-hidden ${
-            isScrolled ? 'apple-fractal-glass-scrolled shadow-[0_20px_45px_-10px_rgba(0,0,0,0.7)]' : 'apple-fractal-glass'
+            isScrolled ? 'figma-fluid-glass-scrolled' : 'figma-fluid-glass'
           }`}
         >
-          {/* Specular Rim Bevel (Top Light Refraction) */}
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/40 via-[#ccff00]/30 to-transparent pointer-events-none z-20 opacity-80" />
+          {/* Specular Top Light Rim Bevel */}
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/50 via-[#ccff00]/40 to-transparent pointer-events-none z-20 opacity-90" />
 
-          {/* Fractal Crystalline Facets & Refractive Dispersion Overlays */}
+          {/* Figma-style ambient fluid sheen reflection */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-            <div 
-              className="absolute -top-12 -left-8 w-60 h-36 bg-gradient-to-br from-white/15 via-[#ccff00]/8 to-transparent rotate-25 blur-[1px] opacity-25"
-              style={{ clipPath: 'polygon(0% 0%, 100% 0%, 80% 100%, 0% 80%)' }}
-            />
-            <div 
-              className="absolute -bottom-10 right-1/4 w-80 h-28 bg-gradient-to-tl from-purple-500/8 via-[#ccff00]/5 to-transparent -rotate-12 blur-[1px] opacity-20"
-              style={{ clipPath: 'polygon(20% 0%, 100% 20%, 80% 100%, 0% 100%)' }}
-            />
-            <div className="absolute top-0 right-28 w-40 h-full bg-gradient-to-b from-white/8 to-transparent skew-x-12 opacity-15 pointer-events-none" />
-            <div className="absolute inset-y-0 w-32 bg-gradient-to-r from-transparent via-white/8 to-transparent pointer-events-none animate-glass-shimmer opacity-20" />
-            <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-black/30 pointer-events-none" />
+            <div className="absolute -top-10 left-10 w-72 h-20 bg-white/10 blur-2xl rounded-full pointer-events-none" />
+            <div className="absolute -bottom-8 right-12 w-64 h-16 bg-[#ccff00]/5 blur-2xl rounded-full pointer-events-none" />
+            <div className="absolute inset-y-0 w-32 bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none animate-glass-shimmer opacity-30" />
           </div>
 
           <div className={`relative z-10 flex items-center justify-between px-4 sm:px-6 md:px-8 transition-all duration-300 ${

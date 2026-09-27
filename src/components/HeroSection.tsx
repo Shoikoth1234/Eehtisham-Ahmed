@@ -78,7 +78,7 @@ export default function HeroSection({
           initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.65, delay: 0.1, ease: EASINGS.cinematic }}
-          className="inline-flex items-center gap-3 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#0a0a0f] border border-white/10 shadow-[0_4px_25px_rgba(0,0,0,0.6)] mb-8 sm:mb-10 backdrop-blur-md hover:border-white/25 transition-all duration-300"
+          className="inline-flex items-center gap-3 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full figma-fluid-glass shadow-[0_8px_30px_rgba(0,0,0,0.5)] mb-8 sm:mb-10 hover:border-white/30 transition-all duration-300"
         >
           {/* Avatar stack */}
           <div className="flex -space-x-2 overflow-hidden items-center shrink-0">
