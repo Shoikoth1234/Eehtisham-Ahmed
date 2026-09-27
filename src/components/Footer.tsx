@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, Youtube, Instagram, ArrowUp, Send, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
 import { SOCIAL_LINKS, BRAND_INFO } from '../data/portfolioData';
+import { useSmoothScroll } from '../context/SmoothScrollContext';
+import { EASINGS } from './motion/MotionVariants';
 
 // Custom Behance SVG Icon
 function BehanceIcon({ className }: { className?: string }) {
@@ -14,6 +17,7 @@ function BehanceIcon({ className }: { className?: string }) {
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const { scrollTo } = useSmoothScroll();
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +29,12 @@ export default function Footer() {
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollTo(0, { duration: 1.2 });
+  };
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    scrollTo(href, { offset: -90, duration: 1.2 });
   };
 
   return (
@@ -36,14 +45,26 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 pb-14 border-b border-white/10">
-          
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7, ease: EASINGS.cinematic }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 pb-14 border-b border-white/10"
+        >
           {/* Brand & Newsletter Column */}
           <div className="lg:col-span-6 flex flex-col justify-between">
             <div>
               {/* Brand Logo & Status */}
               <div className="flex items-center gap-3 mb-4">
-                <a href="#" className="flex items-center gap-2.5 group">
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollTo(0, { duration: 1.1 });
+                  }}
+                  className="flex items-center gap-2.5 group"
+                >
                   <div className="relative w-7 h-7 rounded-full ring-[1.5px] ring-white/20 group-hover:ring-[#ccff00] overflow-hidden transition-all duration-300 shadow-[0_0_12px_rgba(204,255,0,0.25)] bg-[#0d0d14] flex-shrink-0">
                     <img
                       src={BRAND_INFO.logoUrl}
@@ -98,13 +119,15 @@ export default function Footer() {
                     onChange={(e) => setEmail(e.target.value)}
                     className="flex-1 px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#ccff00] text-white placeholder:text-neutral-500 text-xs sm:text-sm outline-none transition-all"
                   />
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     type="submit"
-                    className="px-5 py-2.5 rounded-xl bg-[#ccff00] hover:bg-[#d9ff33] active:scale-95 text-black font-bold text-xs sm:text-sm transition-all duration-200 flex items-center justify-center gap-1.5 shrink-0 cursor-pointer shadow-[0_0_15px_rgba(204,255,0,0.3)]"
+                    className="px-5 py-2.5 rounded-xl bg-[#ccff00] hover:bg-[#d9ff33] text-black font-bold text-xs sm:text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 shrink-0 cursor-pointer shadow-[0_0_15px_rgba(204,255,0,0.3)]"
                   >
                     <span>Subscribe</span>
                     <Send className="w-3.5 h-3.5" />
-                  </button>
+                  </motion.button>
                 </form>
               )}
             </div>
@@ -120,32 +143,56 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3 text-sm text-neutral-400">
                 <li>
-                  <a href="#projects" className="hover:text-white hover:text-[#ccff00] transition-colors">
+                  <a
+                    href="#projects"
+                    onClick={(e) => handleNavClick(e, '#projects')}
+                    className="hover:text-white hover:text-[#ccff00] transition-colors"
+                  >
                     Selected Works
                   </a>
                 </li>
                 <li>
-                  <a href="#services" className="hover:text-white hover:text-[#ccff00] transition-colors">
+                  <a
+                    href="#services"
+                    onClick={(e) => handleNavClick(e, '#services')}
+                    className="hover:text-white hover:text-[#ccff00] transition-colors"
+                  >
                     Services &amp; Capabilities
                   </a>
                 </li>
                 <li>
-                  <a href="#process" className="hover:text-white hover:text-[#ccff00] transition-colors">
+                  <a
+                    href="#process"
+                    onClick={(e) => handleNavClick(e, '#process')}
+                    className="hover:text-white hover:text-[#ccff00] transition-colors"
+                  >
                     Our Workflow
                   </a>
                 </li>
                 <li>
-                  <a href="#pricing" className="hover:text-white hover:text-[#ccff00] transition-colors">
+                  <a
+                    href="#pricing"
+                    onClick={(e) => handleNavClick(e, '#pricing')}
+                    className="hover:text-white hover:text-[#ccff00] transition-colors"
+                  >
                     Pricing &amp; Plans
                   </a>
                 </li>
                 <li>
-                  <a href="#testimonials" className="hover:text-white hover:text-[#ccff00] transition-colors">
-                    Client Reviews
+                  <a
+                    href="#about"
+                    onClick={(e) => handleNavClick(e, '#about')}
+                    className="hover:text-white hover:text-[#ccff00] transition-colors"
+                  >
+                    About Me
                   </a>
                 </li>
                 <li>
-                  <a href="#faq" className="hover:text-white hover:text-[#ccff00] transition-colors">
+                  <a
+                    href="#faq"
+                    onClick={(e) => handleNavClick(e, '#faq')}
+                    className="hover:text-white hover:text-[#ccff00] transition-colors"
+                  >
                     Frequently Asked Questions
                   </a>
                 </li>
@@ -164,11 +211,12 @@ export default function Footer() {
 
               <div className="space-y-2.5">
                 {/* Behance Link */}
-                <a
+                <motion.a
+                  whileHover={{ x: 4, transition: { duration: 0.2 } }}
                   href={SOCIAL_LINKS.behance}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-blue-400/40 transition-all text-neutral-300 hover:text-white"
+                  className="group flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-blue-400/40 transition-colors text-neutral-300 hover:text-white"
                 >
                   <div className="flex items-center gap-2.5">
                     <div className="w-7 h-7 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center">
@@ -176,15 +224,16 @@ export default function Footer() {
                     </div>
                     <span className="text-xs font-medium">Behance Portfolio</span>
                   </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
-                </a>
+                  <ArrowRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-transform" />
+                </motion.a>
 
                 {/* YouTube Link */}
-                <a
+                <motion.a
+                  whileHover={{ x: 4, transition: { duration: 0.2 } }}
                   href={SOCIAL_LINKS.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-red-400/40 transition-all text-neutral-300 hover:text-white"
+                  className="group flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-red-400/40 transition-colors text-neutral-300 hover:text-white"
                 >
                   <div className="flex items-center gap-2.5">
                     <div className="w-7 h-7 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center">
@@ -192,15 +241,16 @@ export default function Footer() {
                     </div>
                     <span className="text-xs font-medium">YouTube Channel</span>
                   </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
-                </a>
+                  <ArrowRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-transform" />
+                </motion.a>
 
                 {/* Instagram Link */}
-                <a
+                <motion.a
+                  whileHover={{ x: 4, transition: { duration: 0.2 } }}
                   href={SOCIAL_LINKS.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-pink-400/40 transition-all text-neutral-300 hover:text-white"
+                  className="group flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-pink-400/40 transition-colors text-neutral-300 hover:text-white"
                 >
                   <div className="flex items-center gap-2.5">
                     <div className="w-7 h-7 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center">
@@ -208,14 +258,14 @@ export default function Footer() {
                     </div>
                     <span className="text-xs font-medium">Instagram</span>
                   </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
-                </a>
+                  <ArrowRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-transform" />
+                </motion.a>
               </div>
             </div>
 
           </div>
 
-        </div>
+        </motion.div>
 
         {/* Bottom Bar: Copyright & Back to Top */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -224,13 +274,15 @@ export default function Footer() {
           </p>
 
           <div className="flex items-center gap-4">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
               onClick={scrollToTop}
-              className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-xs font-mono text-neutral-300 hover:text-white transition-all cursor-pointer group"
+              className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-xs font-mono text-neutral-300 hover:text-white transition-colors cursor-pointer group"
             >
               <span>Back to Top</span>
               <ArrowUp className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform text-[#ccff00]" />
-            </button>
+            </motion.button>
           </div>
         </div>
 

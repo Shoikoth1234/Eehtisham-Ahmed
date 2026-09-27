@@ -1,6 +1,8 @@
 import React from 'react';
 import { Check, Sparkles, ArrowRight } from 'lucide-react';
+import { motion } from 'motion/react';
 import { PRICING_PLANS } from '../data/portfolioData';
+import { EASINGS, staggerContainer, itemFadeUp } from './motion/MotionVariants';
 
 interface PricingSectionProps {
   onSelectPlan: (planId: string) => void;
@@ -11,23 +13,37 @@ export default function PricingSection({ onSelectPlan }: PricingSectionProps) {
     <section id="pricing" className="py-16 sm:py-24 px-4 sm:px-6 relative">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7, ease: EASINGS.cinematic }}
+          className="text-center max-w-2xl mx-auto mb-12 sm:mb-16"
+        >
           <span className="text-xs sm:text-sm font-semibold tracking-widest text-neutral-400 uppercase">
             PRICING PLANS
           </span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mt-2 tracking-tight">
             Find the right plan <span className="text-lime-glow">for your content</span>
           </h2>
-        </div>
+        </motion.div>
 
-        {/* 3 Pricing Cards Grid matching the screenshot */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+        {/* 3 Pricing Cards Grid with stagger */}
+        <motion.div
+          variants={staggerContainer(0.12, 0.1)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch"
+        >
           {PRICING_PLANS.map((plan) => {
             const isHighlighted = plan.isPopular;
             return (
-              <div
+              <motion.div
                 key={plan.id}
-                className={`relative rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.5)] ${
+                variants={itemFadeUp}
+                whileHover={{ y: isHighlighted ? -8 : -5, transition: { duration: 0.25, ease: EASINGS.smoothOut } }}
+                className={`relative rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-colors duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.5)] will-change-transform ${
                   isHighlighted
                     ? 'bg-[#12121c] border-2 border-[#ccff00] md:-translate-y-2 shadow-[0_0_50px_rgba(204,255,0,0.15)]'
                     : 'bg-[#0e0e14] border border-white/10 hover:border-white/20'
@@ -83,22 +99,24 @@ export default function PricingSection({ onSelectPlan }: PricingSectionProps) {
                   </div>
                 </div>
 
-                {/* CTA Button */}
-                <button
+                {/* CTA Button with Micro-interaction */}
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => onSelectPlan(plan.id)}
-                  className={`w-full py-3.5 px-6 rounded-full font-bold text-sm transition-all duration-200 flex items-center justify-center gap-2 ${
+                  className={`group w-full py-3.5 px-6 rounded-full font-bold text-sm transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer ${
                     isHighlighted
                       ? 'bg-[#ccff00] hover:bg-[#d9ff33] text-black shadow-[0_0_25px_rgba(204,255,0,0.4)] hover:shadow-[0_0_35px_rgba(204,255,0,0.6)]'
                       : 'bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-white/20'
                   }`}
                 >
                   <span>{plan.buttonText}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </motion.button>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

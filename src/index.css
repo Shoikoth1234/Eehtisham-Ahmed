@@ -203,31 +203,26 @@
   display: inline-block;
 }
 
-/* Gooey Cursor Fluid Motion (Brand Color #ccff00) */
-:root {
-  --cursor-size: 26px;
+/* Lenis Smooth Scroll Integration */
+html.lenis,
+html.lenis body {
+  height: auto;
 }
 
-#cursor {
-  position: fixed;
-  top: calc(var(--cursor-size) * -0.5);
-  left: calc(var(--cursor-size) * -0.5);
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth iframe {
   pointer-events: none;
-  mix-blend-mode: difference;
-  filter: url(#goo);
-  z-index: 99999;
-}
-
-.cursor-circle {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--cursor-size);
-  height: var(--cursor-size);
-  border-radius: var(--cursor-size);
-  transform-origin: center center;
-  background-color: #ccff00;
-  box-shadow: 0 0 10px rgba(204, 255, 0, 0.5);
 }
 
 /* Continuous Marquee Ticker */
@@ -245,3 +240,16 @@
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+/* Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
+import { EASINGS } from './motion/MotionVariants';
 
 const VIDEO_THUMBNAIL =
   "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&q=80";
@@ -8,32 +10,61 @@ interface StatementBannerProps {
 }
 
 export default function StatementBanner({ onVideoClick }: StatementBannerProps) {
+  const bannerRef = useRef<HTMLElement>(null);
+
+  // Scroll-linked continuous transformation for subtle Framer-grade inertia
+  const { scrollYProgress } = useScroll({
+    target: bannerRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const topRowX = useTransform(scrollYProgress, [0, 1], [-18, 18]);
+  const bottomRowX = useTransform(scrollYProgress, [0, 1], [18, -18]);
+  const videoScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1.06, 0.95]);
+
   return (
-    <section className="hero-copy py-12 sm:py-20 px-4 sm:px-6 relative overflow-hidden">
-      {/* Container aligned with the Performance Card (max-w-6xl mx-auto) */}
+    <section
+      ref={bannerRef}
+      className="hero-copy py-12 sm:py-20 px-4 sm:px-6 relative overflow-hidden"
+    >
+      {/* Container aligned with max-w-6xl */}
       <div className="max-w-6xl mx-auto text-center w-full flex flex-col items-center justify-center font-display font-black tracking-[-1px] sm:tracking-[-1.5px] md:tracking-[-2px]">
         
-        {/* Constrained text box strictly within the red line boundaries of the card */}
         <div className="w-full max-w-[1080px] mx-auto flex flex-col items-center justify-center">
           
-          {/* TOP TEXT LAYER */}
-          <div className="text-row top-row text-[20px] sm:text-[30px] md:text-[38px] lg:text-[44px] xl:text-[48px] leading-[1.22] sm:leading-[1.2] text-center">
+          {/* TOP TEXT LAYER with scroll-linked horizontal drift */}
+          <motion.div
+            style={{ x: topRowX }}
+            initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.75, ease: EASINGS.cinematic }}
+            className="text-row top-row text-[20px] sm:text-[30px] md:text-[38px] lg:text-[44px] xl:text-[48px] leading-[1.22] sm:leading-[1.2] text-center will-change-transform"
+          >
             <GradientText>
               We create, edit, and market
             </GradientText>
-          </div>
+          </motion.div>
 
           {/* MIDDLE AUTO LAYOUT — HORIZONTAL */}
-          <div className="text-row middle-row flex items-center justify-center flex-wrap sm:flex-nowrap gap-2 sm:gap-3 md:gap-3.5 my-1 sm:my-2 text-[20px] sm:text-[30px] md:text-[38px] lg:text-[44px] xl:text-[48px] leading-[1.22] sm:leading-[1.2]">
-            
+          <motion.div
+            initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.75, delay: 0.1, ease: EASINGS.cinematic }}
+            className="text-row middle-row flex items-center justify-center flex-wrap sm:flex-nowrap gap-2 sm:gap-3 md:gap-3.5 my-1 sm:my-2 text-[20px] sm:text-[30px] md:text-[38px] lg:text-[44px] xl:text-[48px] leading-[1.22] sm:leading-[1.2]"
+          >
             {/* TEXT LAYER 01 */}
             <GradientText>
               videos whether
             </GradientText>
 
-            {/* VIDEO LAYER PILL */}
-            <div
-              className="video-wrapper relative inline-flex items-center justify-center shrink-0 w-[54px] h-[30px] sm:w-[72px] sm:h-[38px] md:w-[86px] md:h-[44px] lg:w-[98px] lg:h-[48px] rounded-full overflow-hidden border border-white/25 shadow-[0_0_25px_rgba(204,255,0,0.18)] group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[#ccff00] hover:shadow-[0_0_30px_rgba(204,255,0,0.35)]"
+            {/* VIDEO LAYER PILL with scroll-linked scale + hover interaction */}
+            <motion.div
+              style={{ scale: videoScale }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="video-wrapper project-card-interactive relative inline-flex items-center justify-center shrink-0 w-[54px] h-[30px] sm:w-[72px] sm:h-[38px] md:w-[86px] md:h-[44px] lg:w-[98px] lg:h-[48px] rounded-full overflow-hidden border border-white/25 shadow-[0_0_25px_rgba(204,255,0,0.18)] group cursor-pointer transition-colors duration-300 hover:border-[#ccff00] hover:shadow-[0_0_30px_rgba(204,255,0,0.35)]"
               onClick={onVideoClick}
               role="button"
               tabIndex={0}
@@ -59,21 +90,27 @@ export default function StatementBanner({ onVideoClick }: StatementBannerProps) 
                   </svg>
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* TEXT LAYER 02 */}
             <GradientText>
               filmed at your
             </GradientText>
+          </motion.div>
 
-          </div>
-
-          {/* BOTTOM TEXT LAYER */}
-          <div className="text-row bottom-row text-[20px] sm:text-[30px] md:text-[38px] lg:text-[44px] xl:text-[48px] leading-[1.22] sm:leading-[1.2] text-center">
+          {/* BOTTOM TEXT LAYER with scroll-linked horizontal drift */}
+          <motion.div
+            style={{ x: bottomRowX }}
+            initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.75, delay: 0.18, ease: EASINGS.cinematic }}
+            className="text-row bottom-row text-[20px] sm:text-[30px] md:text-[38px] lg:text-[44px] xl:text-[48px] leading-[1.22] sm:leading-[1.2] text-center will-change-transform"
+          >
             <GradientText>
               place or sent by you
             </GradientText>
-          </div>
+          </motion.div>
 
         </div>
 

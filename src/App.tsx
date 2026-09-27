@@ -16,10 +16,11 @@ import PricingSection from './components/PricingSection';
 import BookCallSection from './components/BookCallSection';
 import FaqSection from './components/FaqSection';
 import Footer from './components/Footer';
-import CursorGlow from './components/CursorGlow';
-import GooeyCursor from './components/GooeyCursor';
+import CustomCursor from './components/CustomCursor';
+import ScrollProgressBar from './components/ScrollProgressBar';
 import VideoPlayerModal from './components/VideoPlayerModal';
 import GraphicDesignModal from './components/GraphicDesignModal';
+import { SmoothScrollProvider } from './context/SmoothScrollContext';
 import { VIDEO_PROJECTS } from './data/portfolioData';
 import { VideoProject, GraphicDesignProject } from './types';
 
@@ -38,92 +39,91 @@ export default function App() {
     setActiveVideo(featuredProject);
   };
 
-  const handleOpenShorts = () => {
-    const shortProject = VIDEO_PROJECTS.find((p) => p.videoId === 'dd0b5r9lxHE') || VIDEO_PROJECTS[1];
-    setActiveVideo(shortProject);
-  };
-
   const handleSelectPlan = (planId: string) => {
     setSelectedPlan(planId);
     setIsBookingOpen(true);
   };
 
+  const isAnyModalOpen = isBookingOpen || !!activeVideo || !!activeGraphic;
+
   return (
-    <div className="relative min-h-screen bg-[#08080a] text-[#ededef] selection:bg-[#ccff00] selection:text-black font-sans">
-      {/* Smooth Cursor Glow effect */}
-      <CursorGlow />
+    <SmoothScrollProvider isModalOpen={isAnyModalOpen}>
+      <div className="relative min-h-screen bg-[#08080a] text-[#ededef] selection:bg-[#ccff00] selection:text-black font-sans">
+        {/* Subtle 2px glowing scroll progress line at top of viewport */}
+        <ScrollProgressBar />
 
-      {/* Fluid Motion Gooey Cursor in Brand Color (#ccff00) */}
-      <GooeyCursor />
+        {/* High-performance, Framer-inspired custom cursor for desktop */}
+        <CustomCursor />
 
-      {/* Fractal Glass Navigation Header */}
-      <FractalGlassHeader
-        onBookCallClick={() => setIsBookingOpen(true)}
-        onShowreelClick={handleOpenHeroVideo}
-      />
-
-      {/* Main Content Sections */}
-      <main id="main-content" tabIndex={-1}>
-        {/* Hero Section */}
-        <HeroSection
+        {/* Fractal Glass Navigation Header */}
+        <FractalGlassHeader
           onBookCallClick={() => setIsBookingOpen(true)}
           onShowreelClick={handleOpenHeroVideo}
-          onPlayHeroVideo={handleOpenHeroVideo}
         />
 
-        {/* Performance Metrics */}
-        <PerformanceMetrics />
+        {/* Main Content Sections */}
+        <main id="main-content" tabIndex={-1}>
+          {/* Hero Section */}
+          <HeroSection
+            onBookCallClick={() => setIsBookingOpen(true)}
+            onShowreelClick={handleOpenHeroVideo}
+            onPlayHeroVideo={handleOpenHeroVideo}
+          />
 
-        {/* Floating Typography Statement */}
-        <StatementBanner onVideoClick={handleOpenShowreel} />
+          {/* Performance Metrics */}
+          <PerformanceMetrics />
 
-        {/* Projects Showcase with YouTube Videos, Overlays, and Graphic Design */}
-        <ProjectsShowcase
-          onSelectVideo={(project) => setActiveVideo(project)}
-          onSelectGraphic={(graphic) => setActiveGraphic(graphic)}
+          {/* Floating Typography Statement with Scroll-Linked Parallax */}
+          <StatementBanner onVideoClick={handleOpenShowreel} />
+
+          {/* Projects Showcase with Framer Category Tabs, Overlays, and Smooth Zoom */}
+          <ProjectsShowcase
+            onSelectVideo={(project) => setActiveVideo(project)}
+            onSelectGraphic={(graphic) => setActiveGraphic(graphic)}
+          />
+
+          {/* About Me Section with Scroll Parallax */}
+          <TestimonialsSection
+            onShowreelClick={handleOpenShowreel}
+            onBookCallClick={() => setIsBookingOpen(true)}
+          />
+
+          {/* Why Choose Us Case Studies */}
+          <WhyChooseUs onShowreelClick={handleOpenShowreel} />
+
+          {/* Work Process Steps */}
+          <WorkProcess />
+
+          {/* Pricing Plans with Micro-interactions */}
+          <PricingSection onSelectPlan={handleSelectPlan} />
+
+          {/* Book a Call Banner & Modal */}
+          <BookCallSection
+            isModalOpen={isBookingOpen}
+            onOpenModal={() => setIsBookingOpen(true)}
+            onCloseModal={() => setIsBookingOpen(false)}
+            preselectedPlan={selectedPlan}
+          />
+
+          {/* FAQ Accordion with Spring Transitions */}
+          <FaqSection />
+        </main>
+
+        {/* Footer with Lenis-powered Back-to-Top and Social Links */}
+        <Footer />
+
+        {/* Video Modal Player with YouTube integration */}
+        <VideoPlayerModal
+          project={activeVideo}
+          onClose={() => setActiveVideo(null)}
         />
 
-        {/* About Me Section */}
-        <TestimonialsSection
-          onShowreelClick={handleOpenShowreel}
-          onBookCallClick={() => setIsBookingOpen(true)}
+        {/* Graphic Design Artwork Modal */}
+        <GraphicDesignModal
+          graphic={activeGraphic}
+          onClose={() => setActiveGraphic(null)}
         />
-
-        {/* Why Choose Us Case Studies */}
-        <WhyChooseUs onShowreelClick={handleOpenShowreel} />
-
-        {/* Work Process Steps */}
-        <WorkProcess />
-
-        {/* Pricing Plans */}
-        <PricingSection onSelectPlan={handleSelectPlan} />
-
-        {/* Book a Call Banner & Modal */}
-        <BookCallSection
-          isModalOpen={isBookingOpen}
-          onOpenModal={() => setIsBookingOpen(true)}
-          onCloseModal={() => setIsBookingOpen(false)}
-          preselectedPlan={selectedPlan}
-        />
-
-        {/* FAQ Accordion */}
-        <FaqSection />
-      </main>
-
-      {/* Footer with Behance, YouTube, and Instagram links */}
-      <Footer />
-
-      {/* Video Modal Player with YouTube integration */}
-      <VideoPlayerModal
-        project={activeVideo}
-        onClose={() => setActiveVideo(null)}
-      />
-
-      {/* Graphic Design Artwork Modal */}
-      <GraphicDesignModal
-        graphic={activeGraphic}
-        onClose={() => setActiveGraphic(null)}
-      />
-    </div>
+      </div>
+    </SmoothScrollProvider>
   );
 }

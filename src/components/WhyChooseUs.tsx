@@ -1,6 +1,8 @@
 import React from 'react';
-import { Play, TrendingUp, Users, Eye } from 'lucide-react';
+import { Play } from 'lucide-react';
+import { motion } from 'motion/react';
 import { CASE_STUDIES } from '../data/portfolioData';
+import { EASINGS, staggerContainer, itemFadeUp } from './motion/MotionVariants';
 
 interface WhyChooseUsProps {
   onShowreelClick: () => void;
@@ -11,21 +13,35 @@ export default function WhyChooseUs({ onShowreelClick }: WhyChooseUsProps) {
     <section id="services" className="py-16 sm:py-24 px-4 sm:px-6 relative">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7, ease: EASINGS.cinematic }}
+          className="text-center max-w-2xl mx-auto mb-12 sm:mb-16"
+        >
           <span className="text-xs sm:text-sm font-semibold tracking-widest text-neutral-400 uppercase">
             WHY CHOOSE US
           </span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mt-2 tracking-tight">
             Why we're the smart <span className="text-lime-glow">choice for growth</span>
           </h2>
-        </div>
+        </motion.div>
 
-        {/* Case Studies Stack matching the screenshot */}
-        <div className="space-y-8 sm:space-y-10">
+        {/* Case Studies Stack with staggered reveals */}
+        <motion.div
+          variants={staggerContainer(0.12, 0.1)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          className="space-y-8 sm:space-y-10"
+        >
           {CASE_STUDIES.map((study) => (
-            <div
+            <motion.div
               key={study.id}
-              className="group relative rounded-3xl bg-[#0e0e14] border border-white/10 hover:border-[#ccff00]/30 p-6 sm:p-8 md:p-10 shadow-[0_15px_40px_rgba(0,0,0,0.5)] transition-all duration-300"
+              variants={itemFadeUp}
+              whileHover={{ y: -4, transition: { duration: 0.25, ease: EASINGS.smoothOut } }}
+              className="group relative rounded-3xl bg-[#0e0e14] border border-white/10 hover:border-[#ccff00]/30 p-6 sm:p-8 md:p-10 shadow-[0_15px_40px_rgba(0,0,0,0.5)] transition-colors duration-300 will-change-transform"
             >
               <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-center ${study.reversed ? 'lg:flex-row-reverse' : ''}`}>
                 {/* Content Side */}
@@ -70,27 +86,27 @@ export default function WhyChooseUs({ onShowreelClick }: WhyChooseUsProps) {
                 <div className={`lg:col-span-5 ${study.reversed ? 'lg:order-1' : 'lg:order-2'}`}>
                   <div
                     onClick={onShowreelClick}
-                    className="relative aspect-video rounded-2xl overflow-hidden bg-[#161622] border border-white/10 group-hover:border-[#ccff00]/40 shadow-xl cursor-pointer"
+                    className="project-card-interactive relative aspect-video rounded-2xl overflow-hidden bg-[#161622] border border-white/10 group-hover:border-[#ccff00]/40 shadow-xl cursor-pointer"
                   >
                     <img
                       src={study.previewUrl}
                       alt={study.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out filter brightness-95"
                       referrerPolicy="no-referrer"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
 
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white group-hover:bg-[#ccff00] group-hover:text-black group-hover:scale-110 transition-all shadow-lg">
+                      <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white group-hover:bg-[#ccff00] group-hover:text-black group-hover:scale-110 transition-all duration-300 shadow-lg">
                         <Play className="w-5 h-5 ml-0.5 fill-current" />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ArrowUpRight, Play } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { VideoProject } from '../types';
 import VideoPlayerModal from './VideoPlayerModal';
+import { EASINGS } from './motion/MotionVariants';
 
 export const HERO_SHOWCASE_PROJECT: VideoProject = {
   id: 'hero-product-video',
@@ -14,7 +16,7 @@ export const HERO_SHOWCASE_PROJECT: VideoProject = {
   duration: '01:45',
   client: 'MZ Media Style Showcase',
   isShort: false,
-  resolution: '4K UHD'
+  resolution: '4K UHD',
 };
 
 interface HeroSectionProps {
@@ -26,10 +28,21 @@ interface HeroSectionProps {
 export default function HeroSection({
   onBookCallClick,
   onShowreelClick,
-  onPlayHeroVideo
+  onPlayHeroVideo,
 }: HeroSectionProps) {
   const [isLocalModalOpen, setIsLocalModalOpen] = useState(false);
+  const heroRef = useRef<HTMLElement>(null);
   const heroVideoId = '3_dCjH9rCEE';
+
+  // Scroll-linked cinematic parallax for hero showcase visual
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const videoY = useTransform(scrollYProgress, [0, 1], [0, 48]);
+  const videoScale = useTransform(scrollYProgress, [0, 1], [1, 0.97]);
+  const ambientGlowY = useTransform(scrollYProgress, [0, 1], [0, 90]);
 
   const handleTriggerVideoPopup = () => {
     if (onPlayHeroVideo) {
@@ -42,17 +55,29 @@ export default function HeroSection({
   };
 
   return (
-    <section id="hero" className="relative pt-28 sm:pt-36 md:pt-40 pb-16 sm:pb-24 px-4 sm:px-6 overflow-hidden bg-[#07070a]">
-      {/* MZ Media Style Ambient Mesh Background Lighting */}
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-gradient-to-br from-indigo-900/20 via-purple-900/10 to-transparent blur-[140px] pointer-events-none -translate-x-1/3 -translate-y-1/3" />
-      <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#ccff00]/10 via-emerald-900/10 to-transparent blur-[160px] pointer-events-none translate-x-1/3" />
+    <section
+      ref={heroRef}
+      id="hero"
+      className="relative pt-28 sm:pt-36 md:pt-40 pb-16 sm:pb-24 px-4 sm:px-6 overflow-hidden bg-[#07070a]"
+    >
+      {/* Ambient Mesh Background Lighting with scroll-linked depth */}
+      <motion.div
+        style={{ y: ambientGlowY }}
+        className="absolute top-0 left-0 w-[500px] h-[500px] bg-gradient-to-br from-indigo-900/20 via-purple-900/10 to-transparent blur-[140px] pointer-events-none -translate-x-1/3 -translate-y-1/3"
+      />
+      <motion.div
+        style={{ y: ambientGlowY }}
+        className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#ccff00]/10 via-emerald-900/10 to-transparent blur-[160px] pointer-events-none translate-x-1/3"
+      />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[350px] bg-gradient-to-r from-blue-900/10 via-purple-900/10 to-[#ccff00]/5 blur-[160px] pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto flex flex-col items-center">
-        
-        {/* Single Reference Creator Trust Badge Pill */}
-        <div
+        {/* 1. Creator Trust Badge Pill */}
+        <motion.div
           id="hero-trust-badge"
+          initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.65, delay: 0.1, ease: EASINGS.cinematic }}
           className="inline-flex items-center gap-3 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#0a0a0f] border border-white/10 shadow-[0_4px_25px_rgba(0,0,0,0.6)] mb-8 sm:mb-10 backdrop-blur-md hover:border-white/25 transition-all duration-300"
         >
           {/* Avatar stack */}
@@ -77,56 +102,81 @@ export default function HeroSection({
             />
           </div>
 
-          {/* Text matching reference image */}
           <span className="text-xs sm:text-sm font-medium tracking-tight text-white select-none whitespace-nowrap">
             Trusted by <span className="text-[#ededf5]">100+ creators</span>
           </span>
-        </div>
+        </motion.div>
 
-        {/* Hero Title (MZ Media iconic 'Product videos that just work') */}
+        {/* 2. Hero Title & 3. Supporting Text */}
         <div className="text-center max-w-4xl mx-auto mb-6">
-          <h1 className="font-display text-[38px] sm:text-[54px] md:text-[68px] lg:text-[76px] font-extrabold tracking-[-2px] leading-[1.08] text-white">
+          <motion.h1
+            initial={{ opacity: 0, y: 28, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 0.75, delay: 0.22, ease: EASINGS.cinematic }}
+            className="font-display text-[38px] sm:text-[54px] md:text-[68px] lg:text-[76px] font-extrabold tracking-[-2px] leading-[1.08] text-white"
+          >
             Product videos that{' '}
             <span className="bg-gradient-to-r from-white via-[#e8ff80] to-[#ccff00] bg-clip-text text-transparent">
               just work
             </span>
-          </h1>
-          <p className="mt-5 text-base sm:text-lg md:text-xl text-neutral-300 font-normal leading-relaxed max-w-2xl mx-auto">
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 0.7, delay: 0.36, ease: EASINGS.smoothOut }}
+            className="mt-5 text-base sm:text-lg md:text-xl text-neutral-300 font-normal leading-relaxed max-w-2xl mx-auto"
+          >
             Eehtisham helps creators and brands transform raw footage into scroll-stopping, high-retention video content that drives engagement, reach, and conversions.
-          </p>
+          </motion.p>
         </div>
 
-        {/* Hero CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 mb-10 sm:mb-14">
-          <button
+        {/* 4. Hero CTA Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 18, filter: 'blur(6px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.65, delay: 0.48, ease: EASINGS.smoothOut }}
+          className="flex flex-col sm:flex-row items-center gap-4 mb-10 sm:mb-14"
+        >
+          <motion.button
             id="hero-book-call-cta"
+            whileHover={{ scale: 1.025 }}
+            whileTap={{ scale: 0.98 }}
             onClick={onBookCallClick}
-            className="group relative pl-7 pr-2.5 py-2.5 rounded-full bg-[#ccff00] hover:bg-[#d8ff33] text-[#08080a] font-bold text-sm sm:text-base flex items-center gap-3.5 transition-all duration-300 shadow-[0_0_35px_rgba(204,255,0,0.4)] hover:shadow-[0_0_50px_rgba(204,255,0,0.65)] hover:scale-[1.02] active:scale-95 cursor-pointer"
+            className="group relative pl-7 pr-2.5 py-2.5 rounded-full bg-[#ccff00] hover:bg-[#d8ff33] text-[#08080a] font-bold text-sm sm:text-base flex items-center gap-3.5 transition-colors duration-200 shadow-[0_0_35px_rgba(204,255,0,0.4)] hover:shadow-[0_0_50px_rgba(204,255,0,0.65)] cursor-pointer"
           >
             <span className="font-display tracking-tight">Get your Product Video</span>
             <div className="w-8 h-8 rounded-full bg-[#08080a] text-[#ccff00] flex items-center justify-center transition-transform duration-300 group-hover:rotate-45">
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
             </div>
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
             id="hero-watch-reel-cta"
+            whileHover={{ scale: 1.025 }}
+            whileTap={{ scale: 0.98 }}
             onClick={handleTriggerVideoPopup}
-            className="group px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-white/10 hover:border-white/25 transition-all text-sm font-semibold flex items-center gap-2 cursor-pointer active:scale-95"
+            className="group px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-white/10 hover:border-white/25 transition-all text-sm font-semibold flex items-center gap-2 cursor-pointer"
           >
             <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#ccff00]/20 transition-colors">
               <Play className="w-2.5 h-2.5 text-[#ccff00] fill-[#ccff00] ml-0.5" />
             </div>
             <span>Watch Showreel</span>
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
-        {/* HERO SHOWCASE VIDEO CONTAINER */}
-        <div className="w-full max-w-5xl mx-auto relative">
+        {/* 5. HERO SHOWCASE VIDEO CONTAINER with scroll-linked depth & entrance */}
+        <motion.div
+          initial={{ opacity: 0, y: 36, scale: 0.97, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          transition={{ duration: 0.85, delay: 0.6, ease: EASINGS.cinematic }}
+          style={{ y: videoY, scale: videoScale }}
+          className="w-full max-w-5xl mx-auto relative will-change-transform"
+        >
           <div
             id="hero-video-container"
             onClick={handleTriggerVideoPopup}
-            className="relative rounded-2xl sm:rounded-3xl border border-white/15 hover:border-white/30 overflow-hidden shadow-[0_25px_85px_rgba(0,0,0,0.9)] bg-black transition-all duration-300 cursor-pointer group"
+            className="project-card-interactive relative rounded-2xl sm:rounded-3xl border border-white/15 hover:border-white/30 overflow-hidden shadow-[0_25px_85px_rgba(0,0,0,0.9)] bg-black transition-all duration-300 cursor-pointer group"
           >
             {/* 16:9 Aspect Ratio Frame */}
             <div className="relative aspect-video w-full overflow-hidden bg-[#07070a]">
@@ -142,9 +192,9 @@ export default function HeroSection({
               />
 
               {/* Cinematic Vignette Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 opacity-60 group-hover:opacity-40 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
 
-              {/* Centered Frosted Glass Play Button (MZ Media Signature video-play) */}
+              {/* Centered Frosted Glass Play Button */}
               <div className="absolute inset-0 flex items-center justify-center z-10">
                 <button
                   type="button"
@@ -162,23 +212,24 @@ export default function HeroSection({
             </div>
           </div>
 
-          {/* Floating 'Get Yours Next ↗' Tag (MZ Media video-info-tag style) */}
+          {/* Floating 'Get Yours Next ↗' Tag */}
           <div className="flex justify-center -mt-4 sm:-mt-5 relative z-20">
-            <button
+            <motion.button
               type="button"
               id="hero-get-yours-next"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={onBookCallClick}
-              className="group inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#111116] hover:bg-[#ccff00] text-neutral-200 hover:text-black border border-white/20 hover:border-[#ccff00] transition-all duration-300 text-xs sm:text-sm font-semibold shadow-[0_10px_30px_rgba(0,0,0,0.8)] hover:shadow-[0_0_25px_rgba(204,255,0,0.5)] cursor-pointer backdrop-blur-md active:scale-95"
+              className="group inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#111116] hover:bg-[#ccff00] text-neutral-200 hover:text-black border border-white/20 hover:border-[#ccff00] transition-colors duration-200 text-xs sm:text-sm font-semibold shadow-[0_10px_30px_rgba(0,0,0,0.8)] hover:shadow-[0_0_25px_rgba(204,255,0,0.5)] cursor-pointer backdrop-blur-md"
             >
               <span>Get Yours Next</span>
               <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
+            </motion.button>
           </div>
-        </div>
-
+        </motion.div>
       </div>
 
-      {/* Fallback Local Pop-up Modal if not triggered via parent */}
+      {/* Fallback Local Pop-up Modal */}
       {isLocalModalOpen && (
         <VideoPlayerModal
           project={HERO_SHOWCASE_PROJECT}

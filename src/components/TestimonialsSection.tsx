@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ArrowUpRight, Youtube, Instagram, Facebook } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { SOCIAL_LINKS } from '../data/portfolioData';
+import { EASINGS, staggerContainer, itemFadeUp } from './motion/MotionVariants';
 
 interface AboutMeSectionProps {
   onShowreelClick?: () => void;
@@ -12,17 +14,41 @@ const FALLBACK_PORTRAIT = 'https://images.unsplash.com/photo-1507003211169-0a1dd
 
 export default function AboutMeSection({ onShowreelClick, onBookCallClick }: AboutMeSectionProps) {
   const [profileImg, setProfileImg] = useState<string>(ABOUT_ME_IMAGE);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Subtle scroll-linked parallax depth for the portrait frame
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const photoY = useTransform(scrollYProgress, [0, 1], [-20, 20]);
+  const glowY = useTransform(scrollYProgress, [0, 1], [-30, 30]);
 
   return (
-    <section id="about" className="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden">
-      {/* Ambient background glow behind the glass */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[550px] h-[550px] bg-[#ccff00]/10 rounded-full blur-[150px] pointer-events-none" />
+    <section
+      ref={sectionRef}
+      id="about"
+      className="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden"
+    >
+      {/* Ambient background glow behind the glass with subtle parallax */}
+      <motion.div
+        style={{ y: glowY }}
+        className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[550px] h-[550px] bg-[#ccff00]/10 rounded-full blur-[150px] pointer-events-none"
+      />
 
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column: Photo with Social Icons & Open to Work Badge */}
           <div className="lg:col-span-5 flex justify-center">
-            <div className="relative w-full max-w-sm sm:max-w-md">
+            <motion.div
+              style={{ y: photoY }}
+              initial={{ opacity: 0, scale: 0.95, filter: 'blur(8px)' }}
+              whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.8, ease: EASINGS.cinematic }}
+              className="relative w-full max-w-sm sm:max-w-md will-change-transform"
+            >
               {/* Photo Frame Container */}
               <div className="relative rounded-[28px] sm:rounded-[36px] overflow-hidden bg-[#161622] border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.6)] group">
                 <div className="relative aspect-[4/5] overflow-hidden bg-[#0d0d14]">
@@ -34,7 +60,7 @@ export default function AboutMeSection({ onShowreelClick, onBookCallClick }: Abo
                         setProfileImg(FALLBACK_PORTRAIT);
                       }
                     }}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 filter contrast-[1.05]"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out filter contrast-[1.05]"
                     referrerPolicy="no-referrer"
                   />
                   {/* Subtle bottom shadow vignette */}
@@ -85,36 +111,45 @@ export default function AboutMeSection({ onShowreelClick, onBookCallClick }: Abo
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right Column: Information & Description */}
-          <div className="lg:col-span-7 flex flex-col justify-center">
+          <motion.div
+            variants={staggerContainer(0.09, 0.1)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-60px' }}
+            className="lg:col-span-7 flex flex-col justify-center"
+          >
             {/* Minimal Eyebrow Tag */}
-            <div className="inline-flex items-center gap-2 mb-3">
+            <motion.div variants={itemFadeUp} className="inline-flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-[#ccff00] animate-pulse" />
               <span className="text-xs font-mono font-bold tracking-widest text-[#ccff00] uppercase">
                 ABOUT ME
               </span>
-            </div>
+            </motion.div>
 
             {/* Display Heading exactly 48px on desktop */}
-            <h2 className="font-display text-3xl sm:text-4xl md:text-[48px] font-extrabold text-white tracking-tight leading-[1.15] mb-5">
+            <motion.h2
+              variants={itemFadeUp}
+              className="font-display text-3xl sm:text-4xl md:text-[48px] font-extrabold text-white tracking-tight leading-[1.15] mb-5"
+            >
               Senior Video Editor &amp; Motion Artist.
-            </h2>
+            </motion.h2>
 
             {/* Shorter, punchy bio */}
-            <div className="space-y-3 text-neutral-200 text-sm sm:text-base leading-relaxed max-w-xl mb-7">
+            <motion.div variants={itemFadeUp} className="space-y-3 text-neutral-200 text-sm sm:text-base leading-relaxed max-w-xl mb-7">
               <p>
                 I'm <strong className="text-white font-semibold">Eehtisham</strong>, lead video editor and motion designer. I help modern creators and brands turn raw takes into high-retention cinematic edits that command attention.
               </p>
               <p className="text-neutral-300">
                 Through psychological pacing, dynamic typography, and punchy sound design, I engineer video content built to hook viewers from the first second.
               </p>
-            </div>
+            </motion.div>
 
             {/* 4 Stats Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-5 border-y border-white/15 mb-7">
+            <motion.div variants={itemFadeUp} className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-5 border-y border-white/15 mb-7">
               <div className="flex flex-col">
                 <span className="font-inter font-black text-2xl sm:text-3xl text-white tracking-tight">5+</span>
                 <span className="text-xs text-neutral-300 font-medium mt-1">Years Experience</span>
@@ -131,21 +166,23 @@ export default function AboutMeSection({ onShowreelClick, onBookCallClick }: Abo
                 <span className="font-inter font-black text-2xl sm:text-3xl text-[#ccff00] tracking-tight">24-48h</span>
                 <span className="text-xs text-neutral-300 font-medium mt-1">Fast Turnaround</span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Action CTA Button */}
             {onBookCallClick && (
-              <div className="flex items-center gap-4">
-                <button
+              <motion.div variants={itemFadeUp} className="flex items-center gap-4">
+                <motion.button
+                  whileHover={{ scale: 1.025 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={onBookCallClick}
-                  className="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-sm sm:text-base font-bold text-black bg-[#ccff00] hover:bg-[#d8ff33] rounded-full transition-all duration-200 shadow-[0_0_25px_rgba(204,255,0,0.35)] hover:shadow-[0_0_35px_rgba(204,255,0,0.55)] active:scale-95 cursor-pointer"
+                  className="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-sm sm:text-base font-bold text-black bg-[#ccff00] hover:bg-[#d8ff33] rounded-full transition-colors duration-200 shadow-[0_0_25px_rgba(204,255,0,0.35)] hover:shadow-[0_0_35px_rgba(204,255,0,0.55)] cursor-pointer"
                 >
                   <span>Work With Me</span>
                   <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </button>
-              </div>
+                </motion.button>
+              </motion.div>
             )}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
