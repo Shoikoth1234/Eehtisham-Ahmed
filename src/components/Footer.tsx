@@ -44,7 +44,7 @@ export default function Footer() {
               {/* Brand Logo & Status */}
               <div className="flex items-center gap-3 mb-4">
                 <a href="#" className="flex items-center gap-2.5 group">
-                  <div className="relative w-9 h-9 rounded-full ring-2 ring-white/20 group-hover:ring-[#ccff00] overflow-hidden transition-all duration-300 shadow-[0_0_15px_rgba(204,255,0,0.25)] bg-[#0d0d14] flex-shrink-0">
+                  <div className="relative w-7 h-7 rounded-full ring-[1.5px] ring-white/20 group-hover:ring-[#ccff00] overflow-hidden transition-all duration-300 shadow-[0_0_12px_rgba(204,255,0,0.25)] bg-[#0d0d14] flex-shrink-0">
                     <img
                       src={BRAND_INFO.logoUrl}
                       alt={BRAND_INFO.name}

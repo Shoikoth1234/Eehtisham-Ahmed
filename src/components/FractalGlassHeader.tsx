@@ -73,7 +73,7 @@ export default function FractalGlassHeader({ onBookCallClick, onShowreelClick }:
               className="flex items-center gap-2.5 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ccff00] rounded-full p-1"
             >
               {/* Eehtisham Portrait Logo Icon */}
-              <div className="relative w-9 h-9 rounded-full ring-2 ring-white/20 group-hover:ring-[#ccff00] overflow-hidden transition-all duration-300 shadow-[0_0_15px_rgba(204,255,0,0.25)] bg-[#0d0d14] flex-shrink-0">
+              <div className="relative w-7 h-7 rounded-full ring-[1.5px] ring-white/20 group-hover:ring-[#ccff00] overflow-hidden transition-all duration-300 shadow-[0_0_12px_rgba(204,255,0,0.25)] bg-[#0d0d14] flex-shrink-0">
                 <img
                   src={BRAND_INFO.logoUrl}
                   alt={BRAND_INFO.name}
