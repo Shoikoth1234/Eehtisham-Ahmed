@@ -92,7 +92,7 @@ export default function HeroSection({
             </span>
           </h1>
           <p className="mt-5 text-base sm:text-lg md:text-xl text-neutral-300 font-normal leading-relaxed max-w-2xl mx-auto">
-            Figbits helps brands and creators transform raw footage into scroll-stopping content that drives engagement, reach, and conversions.
+            Eehtisham helps creators and brands transform raw footage into scroll-stopping, high-retention video content that drives engagement, reach, and conversions.
           </p>
         </div>
 

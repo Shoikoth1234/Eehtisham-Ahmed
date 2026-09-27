@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight, Play, Sparkles } from 'lucide-react';
+import { BRAND_INFO } from '../data/portfolioData';
 
 interface FractalGlassHeaderProps {
   onBookCallClick: () => void;
@@ -65,28 +66,25 @@ export default function FractalGlassHeader({ onBookCallClick, onShowreelClick }:
           </div>
 
           <div className="relative z-10 flex items-center justify-between px-4 sm:px-6 md:px-8 py-2.5 sm:py-3">
-            {/* Brand Logo with Apple-grade precision */}
+            {/* Brand Logo with Eehtisham Avatar Logo */}
             <a
               href="#"
               id="brand-logo"
               className="flex items-center gap-2.5 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ccff00] rounded-full p-1"
             >
-              {/* Geometric FigBits Icon with glass backing */}
-              <div className="relative w-8 h-8 rounded-xl bg-gradient-to-br from-white/15 to-white/5 border border-white/20 flex items-center justify-center p-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)] group-hover:border-[#ccff00]/60 transition-all duration-300">
-                <div className="w-full h-full relative">
-                  <span 
-                    className="absolute inset-0 rounded-sm bg-[#ccff00] opacity-90 group-hover:opacity-100 transition-opacity" 
-                    style={{ clipPath: 'polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%)' }} 
-                  />
-                  <span className="absolute inset-[2px] rounded-sm bg-[#08080a] flex items-center justify-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#ccff00] shadow-[0_0_8px_#ccff00]" />
-                  </span>
-                </div>
+              {/* Eehtisham Portrait Logo Icon */}
+              <div className="relative w-9 h-9 rounded-full ring-2 ring-white/20 group-hover:ring-[#ccff00] overflow-hidden transition-all duration-300 shadow-[0_0_15px_rgba(204,255,0,0.25)] bg-[#0d0d14] flex-shrink-0">
+                <img
+                  src={BRAND_INFO.logoUrl}
+                  alt={BRAND_INFO.name}
+                  className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-300 filter contrast-[1.05]"
+                  referrerPolicy="no-referrer"
+                />
               </div>
 
               <div className="flex items-baseline">
                 <span className="font-display font-extrabold text-xl tracking-tight text-white group-hover:text-white/95">
-                  FigBits
+                  {BRAND_INFO.name}
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#ccff00] ml-1 shadow-[0_0_8px_#ccff00]" />
               </div>

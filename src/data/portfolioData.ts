@@ -1,5 +1,12 @@
 import { VideoProject, GraphicDesignProject, MetricItem, Testimonial, CaseStudy, ProcessStep, PricingPlan, FaqItem } from '../types';
 
+export const BRAND_INFO = {
+  name: 'Eehtisham',
+  logoUrl: 'https://i.postimg.cc/Kv6XNNXg/Eehtisham-Ahmed.jpg',
+  tagline: 'Senior Video Editor & Motion Artist',
+  role: 'Senior Video Editor & Motion Designer',
+};
+
 export const SOCIAL_LINKS = {
   behance: 'https://www.behance.net/eehtisham',
   youtube: 'https://www.youtube.com/@Eehtisham2004',

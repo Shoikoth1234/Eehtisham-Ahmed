@@ -106,7 +106,7 @@ export default function AboutMeSection({ onShowreelClick, onBookCallClick }: Abo
             {/* Shorter, punchy bio */}
             <div className="space-y-3 text-neutral-200 text-sm sm:text-base leading-relaxed max-w-xl mb-7">
               <p>
-                I'm <strong className="text-white font-semibold">Eehtisham</strong>, lead video editor and motion designer at <strong className="text-[#ccff00] font-semibold">FigBits</strong>. I help modern creators and brands turn raw takes into high-retention cinematic edits that command attention.
+                I'm <strong className="text-white font-semibold">Eehtisham</strong>, lead video editor and motion designer. I help modern creators and brands turn raw takes into high-retention cinematic edits that command attention.
               </p>
               <p className="text-neutral-300">
                 Through psychological pacing, dynamic typography, and punchy sound design, I engineer video content built to hook viewers from the first second.

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, Youtube, Instagram, ArrowUp, Send, Sparkles } from 'lucide-react';
-import { SOCIAL_LINKS } from '../data/portfolioData';
+import { SOCIAL_LINKS, BRAND_INFO } from '../data/portfolioData';
 
 // Custom Behance SVG Icon
 function BehanceIcon({ className }: { className?: string }) {
@@ -44,14 +44,16 @@ export default function Footer() {
               {/* Brand Logo & Status */}
               <div className="flex items-center gap-3 mb-4">
                 <a href="#" className="flex items-center gap-2.5 group">
-                  <div className="w-8 h-8 rounded-lg bg-[#0e1726] border border-white/15 flex items-center justify-center p-1.5 shadow-md">
-                    <div
-                      className="w-full h-full rounded-sm bg-[#ccff00]"
-                      style={{ clipPath: 'polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%)' }}
+                  <div className="relative w-9 h-9 rounded-full ring-2 ring-white/20 group-hover:ring-[#ccff00] overflow-hidden transition-all duration-300 shadow-[0_0_15px_rgba(204,255,0,0.25)] bg-[#0d0d14] flex-shrink-0">
+                    <img
+                      src={BRAND_INFO.logoUrl}
+                      alt={BRAND_INFO.name}
+                      className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-300 filter contrast-[1.05]"
+                      referrerPolicy="no-referrer"
                     />
                   </div>
                   <span className="font-display font-black text-2xl text-white tracking-tight">
-                    FigBits
+                    {BRAND_INFO.name}
                   </span>
                   <span className="w-2 h-2 rounded-full bg-[#ccff00] animate-pulse" />
                 </a>
@@ -218,7 +220,7 @@ export default function Footer() {
         {/* Bottom Bar: Copyright & Back to Top */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-neutral-500 font-mono text-center sm:text-left">
-            &copy; {new Date().getFullYear()} FigBits • Eehtisham. All rights reserved.
+            &copy; {new Date().getFullYear()} {BRAND_INFO.name}. All rights reserved.
           </p>
 
           <div className="flex items-center gap-4">
