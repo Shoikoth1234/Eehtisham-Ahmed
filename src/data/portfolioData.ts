@@ -168,6 +168,20 @@ export const VIDEO_PROJECTS: VideoProject[] = [
     description: 'Clean aesthetic studio tour emphasizing soft lighting, precise foley sound effects, and color grading.'
   },
   {
+    id: 'vid-saas-sabrly',
+    title: 'Sabrly Media SaaS Animation',
+    category: 'saas',
+    videoId: 'lMgmT5eeXw8',
+    youtubeUrl: 'https://youtu.be/lMgmT5eeXw8?si=dVrJ3AjG9RPJ2qWW',
+    thumbnailUrl: 'https://i.ytimg.com/vi/lMgmT5eeXw8/maxresdefault.jpg',
+    duration: '01:15',
+    resolution: '4K • 60FPS',
+    tags: ['SaaS Animation', 'UI Motion Design', 'Product Walkthrough'],
+    client: 'Sabrly Media',
+    metrics: { views: '140K+', retention: '82%' },
+    description: 'Dynamic SaaS product animation featuring seamless UI interactions, kinetic motion graphics, and engaging product storytelling.'
+  },
+  {
     id: 'vid-cyber-motion',
     title: 'Futuristic Cyber Interface & HUD Pack',
     category: 'saas',

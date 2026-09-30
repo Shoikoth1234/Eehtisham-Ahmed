@@ -72,7 +72,7 @@ export default function AboutMeSection({ onShowreelClick, onBookCallClick }: Abo
                       href={SOCIAL_LINKS.facebook || 'https://facebook.com'}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-neutral-200 hover:text-[#1877F2] transition-colors p-1"
+                      className="text-neutral-200 hover:text-[#ccff00] hover:bg-[#ccff00]/20 rounded-full transition-colors p-1"
                       title="Facebook"
                     >
                       <Facebook className="w-4 h-4" />
@@ -81,7 +81,7 @@ export default function AboutMeSection({ onShowreelClick, onBookCallClick }: Abo
                       href={SOCIAL_LINKS.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-neutral-200 hover:text-[#E4405F] transition-colors p-1"
+                      className="text-neutral-200 hover:text-[#ccff00] hover:bg-[#ccff00]/20 rounded-full transition-colors p-1"
                       title="Instagram"
                     >
                       <Instagram className="w-4 h-4" />
@@ -90,7 +90,7 @@ export default function AboutMeSection({ onShowreelClick, onBookCallClick }: Abo
                       href={SOCIAL_LINKS.youtube}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-neutral-200 hover:text-[#FF0000] transition-colors p-1"
+                      className="text-neutral-200 hover:text-[#ccff00] hover:bg-[#ccff00]/20 rounded-full transition-colors p-1"
                       title="YouTube"
                     >
                       <Youtube className="w-4 h-4" />
@@ -148,19 +148,15 @@ export default function AboutMeSection({ onShowreelClick, onBookCallClick }: Abo
               </p>
             </motion.div>
 
-            {/* 4 Stats Grid */}
-            <motion.div variants={itemFadeUp} className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-5 border-y border-white/15 mb-7">
+            {/* 3 Stats Grid */}
+            <motion.div variants={itemFadeUp} className="grid grid-cols-3 gap-3 sm:gap-6 py-5 border-y border-white/15 mb-7">
               <div className="flex flex-col">
-                <span className="font-inter font-black text-2xl sm:text-3xl text-white tracking-tight">5+</span>
-                <span className="text-xs text-neutral-300 font-medium mt-1">Years Experience</span>
+                <span className="font-inter font-black text-2xl sm:text-3xl text-white tracking-tight">4+</span>
+                <span className="text-xs text-neutral-300 font-medium mt-1">Months of Experience</span>
               </div>
               <div className="flex flex-col">
-                <span className="font-inter font-black text-2xl sm:text-3xl text-[#ccff00] tracking-tight">100+</span>
+                <span className="font-inter font-black text-2xl sm:text-3xl text-[#ccff00] tracking-tight">15+</span>
                 <span className="text-xs text-neutral-300 font-medium mt-1">Videos Delivered</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-inter font-black text-2xl sm:text-3xl text-white tracking-tight">15M+</span>
-                <span className="text-xs text-neutral-300 font-medium mt-1">Client Views</span>
               </div>
               <div className="flex flex-col">
                 <span className="font-inter font-black text-2xl sm:text-3xl text-[#ccff00] tracking-tight">24-48h</span>

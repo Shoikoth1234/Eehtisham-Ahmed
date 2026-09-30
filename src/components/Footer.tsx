@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { SOCIAL_LINKS, BRAND_INFO } from '../data/portfolioData';
 import { useSmoothScroll } from '../context/SmoothScrollContext';
 import { EASINGS } from './motion/MotionVariants';
+import { useCardGlow, CardGlowOverlay } from './InteractiveGlow';
 
 // Custom Behance SVG Icon
 function BehanceIcon({ className }: { className?: string }) {
@@ -11,6 +12,93 @@ function BehanceIcon({ className }: { className?: string }) {
     <svg className={className} viewBox="0 0 24 24" fill="currentColor">
       <path d="M7.799 6c1.171 0 2.064.24 2.68.72.615.48.923 1.169.923 2.067 0 .548-.13 1.012-.39 1.393a2.63 2.63 0 0 1-1.026.899c.563.26 1 .632 1.312 1.116.312.483.468 1.077.468 1.782 0 1.02-.34 1.815-1.02 2.385-.68.57-1.635.855-2.865.855H2V6h5.799zM5.04 10.154h2.466c.465 0 .825-.098 1.08-.293.255-.195.383-.495.383-.9 0-.42-.128-.727-.383-.923-.255-.195-.615-.293-1.08-.293H5.04v2.409zm0 4.606h2.646c.54 0 .952-.113 1.238-.338.285-.225.427-.57.427-1.035 0-.48-.142-.832-.427-1.057-.286-.225-.698-.338-1.238-.338H5.04v2.768zm11.238-3.376c-.99 0-1.748.278-2.273.833-.525.555-.832 1.35-.922 2.385h6.248c-.045-.96-.33-1.725-.855-2.295-.525-.57-1.257-.923-2.198-.923zm.18-2.61c1.875 0 3.3.562 4.275 1.687.975 1.125 1.463 2.67 1.463 4.635 0 .225-.015.54-.045.945h-9.15c.09 1.08.48 1.912 1.17 2.497.69.585 1.575.878 2.655.878 1.65 0 2.85-.615 3.6-1.845l2.4 1.425c-.705 1.11-1.635 1.95-2.79 2.52-1.155.57-2.49.855-4.005.855-2.19 0-3.952-.69-5.288-2.07C9.442 18.945 8.78 17.07 8.78 14.7c0-2.31.67-4.14 2.01-5.49 1.34-1.35 3.09-2.025 5.25-2.025zm-3.69-2.61h7.02v1.68h-7.02V6.16z" />
     </svg>
+  );
+}
+
+function ConnectWithUsCard() {
+  const { glowProps, mousePos } = useCardGlow();
+
+  return (
+    <div
+      {...glowProps}
+      className="relative p-5 sm:p-6 rounded-2xl bg-[#0e0e14] border border-white/10 overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.5)] transition-all duration-300 group"
+    >
+      <CardGlowOverlay
+        mousePos={mousePos}
+        roundedClassName="rounded-2xl"
+        primaryGlowSize={380}
+        coreGlowSize={160}
+        borderGlowSize={380}
+      />
+
+      <div className="relative z-10">
+        <div className="flex items-center justify-between mb-2">
+          <h4 className="text-xs font-semibold text-white uppercase tracking-wider flex items-center gap-2">
+            <Sparkles className="w-3.5 h-3.5 text-[#ccff00]" />
+            Connect With Us
+          </h4>
+          <span className="text-[11px] font-mono text-[#ccff00]">
+            Socials
+          </span>
+        </div>
+        <p className="text-xs text-neutral-400 mb-4">
+          Explore our full showcase and creative portfolios across major platforms:
+        </p>
+
+        <div className="space-y-2.5">
+          {/* Behance Link */}
+          <motion.a
+            whileHover={{ x: 4, transition: { duration: 0.2 } }}
+            href={SOCIAL_LINKS.behance}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-between p-3 rounded-xl bg-[#0b0b10] hover:bg-black/60 border border-white/10 hover:border-[#ccff00]/50 transition-all duration-200 text-neutral-300 hover:text-white"
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-[#ccff00]/20 text-[#ccff00] border border-[#ccff00]/30 flex items-center justify-center transition-all duration-300 group-hover:bg-[#ccff00]/35 group-hover:shadow-[0_0_12px_rgba(204,255,0,0.35)] group-hover:scale-105 shrink-0">
+                <BehanceIcon className="w-3.5 h-3.5" />
+              </div>
+              <span className="text-xs font-medium group-hover:text-[#ccff00] transition-colors">Behance Portfolio</span>
+            </div>
+            <ArrowRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-[#ccff00] group-hover:translate-x-0.5 transition-all" />
+          </motion.a>
+
+          {/* YouTube Link */}
+          <motion.a
+            whileHover={{ x: 4, transition: { duration: 0.2 } }}
+            href={SOCIAL_LINKS.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-between p-3 rounded-xl bg-[#0b0b10] hover:bg-black/60 border border-white/10 hover:border-[#ccff00]/50 transition-all duration-200 text-neutral-300 hover:text-white"
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-[#ccff00]/20 text-[#ccff00] border border-[#ccff00]/30 flex items-center justify-center transition-all duration-300 group-hover:bg-[#ccff00]/35 group-hover:shadow-[0_0_12px_rgba(204,255,0,0.35)] group-hover:scale-105 shrink-0">
+                <Youtube className="w-3.5 h-3.5" />
+              </div>
+              <span className="text-xs font-medium group-hover:text-[#ccff00] transition-colors">YouTube Channel</span>
+            </div>
+            <ArrowRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-[#ccff00] group-hover:translate-x-0.5 transition-all" />
+          </motion.a>
+
+          {/* Instagram Link */}
+          <motion.a
+            whileHover={{ x: 4, transition: { duration: 0.2 } }}
+            href={SOCIAL_LINKS.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-between p-3 rounded-xl bg-[#0b0b10] hover:bg-black/60 border border-white/10 hover:border-[#ccff00]/50 transition-all duration-200 text-neutral-300 hover:text-white"
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-[#ccff00]/20 text-[#ccff00] border border-[#ccff00]/30 flex items-center justify-center transition-all duration-300 group-hover:bg-[#ccff00]/35 group-hover:shadow-[0_0_12px_rgba(204,255,0,0.35)] group-hover:scale-105 shrink-0">
+                <Instagram className="w-3.5 h-3.5" />
+              </div>
+              <span className="text-xs font-medium group-hover:text-[#ccff00] transition-colors">Instagram</span>
+            </div>
+            <ArrowRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-[#ccff00] group-hover:translate-x-0.5 transition-all" />
+          </motion.a>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -313,68 +401,9 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Connect With Us */}
+            {/* Connect With Us Card */}
             <div>
-              <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-300 font-semibold mb-4 flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5 text-[#ccff00]" />
-                Connect With Us
-              </h4>
-              <p className="text-xs text-neutral-400 mb-4">
-                Explore our full showcase and creative portfolios across major platforms:
-              </p>
-
-              <div className="space-y-2.5">
-                {/* Behance Link */}
-                <motion.a
-                  whileHover={{ x: 4, transition: { duration: 0.2 } }}
-                  href={SOCIAL_LINKS.behance}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-blue-400/40 transition-colors text-neutral-300 hover:text-white"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center">
-                      <BehanceIcon className="w-3.5 h-3.5" />
-                    </div>
-                    <span className="text-xs font-medium">Behance Portfolio</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-transform" />
-                </motion.a>
-
-                {/* YouTube Link */}
-                <motion.a
-                  whileHover={{ x: 4, transition: { duration: 0.2 } }}
-                  href={SOCIAL_LINKS.youtube}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-red-400/40 transition-colors text-neutral-300 hover:text-white"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center">
-                      <Youtube className="w-3.5 h-3.5" />
-                    </div>
-                    <span className="text-xs font-medium">YouTube Channel</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-transform" />
-                </motion.a>
-
-                {/* Instagram Link */}
-                <motion.a
-                  whileHover={{ x: 4, transition: { duration: 0.2 } }}
-                  href={SOCIAL_LINKS.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-pink-400/40 transition-colors text-neutral-300 hover:text-white"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center">
-                      <Instagram className="w-3.5 h-3.5" />
-                    </div>
-                    <span className="text-xs font-medium">Instagram</span>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-transform" />
-                </motion.a>
-              </div>
+              <ConnectWithUsCard />
             </div>
 
           </div>

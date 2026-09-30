@@ -3,6 +3,78 @@ import { Plus, Minus } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { FAQ_DATA } from '../data/portfolioData';
 import { EASINGS, staggerContainer, itemFadeUp } from './motion/MotionVariants';
+import { useCardGlow, CardGlowOverlay } from './InteractiveGlow';
+
+function FaqItemCard({
+  item,
+  isOpen,
+  onToggle,
+}: {
+  item: typeof FAQ_DATA[number];
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  const { glowProps, mousePos } = useCardGlow();
+
+  return (
+    <motion.div
+      variants={itemFadeUp}
+      {...glowProps}
+      className={`relative rounded-2xl transition-colors duration-300 border overflow-hidden ${
+        isOpen
+          ? 'bg-[#12121c] border-[#ccff00]/40 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
+          : 'bg-[#0e0e14] border-white/10 hover:border-white/20'
+      }`}
+    >
+      <CardGlowOverlay
+        mousePos={mousePos}
+        roundedClassName="rounded-2xl"
+        primaryGlowSize={320}
+        coreGlowSize={140}
+        borderGlowSize={320}
+      />
+
+      <div className="relative z-10">
+        <button
+          type="button"
+          onClick={onToggle}
+          className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ccff00] rounded-2xl cursor-pointer"
+          aria-expanded={isOpen}
+        >
+          <span className="font-display text-base sm:text-lg font-bold text-white pr-4">
+            {item.question}
+          </span>
+          <motion.div
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.25, ease: EASINGS.smoothOut }}
+            className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+              isOpen ? 'bg-[#ccff00] text-black' : 'bg-white/5 text-neutral-400'
+            }`}
+          >
+            {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+          </motion.div>
+        </button>
+
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.div
+              key="content"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: EASINGS.smoothOut }}
+              className="overflow-hidden"
+            >
+              <div className="px-6 pb-5 pt-1 text-xs sm:text-sm text-neutral-300 leading-relaxed border-t border-white/5">
+                {item.answer}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function FaqSection() {
   const [openId, setOpenId] = useState<string | null>('faq-1');
@@ -38,57 +110,14 @@ export default function FaqSection() {
           viewport={{ once: true, margin: '-60px' }}
           className="space-y-4"
         >
-          {FAQ_DATA.map((item) => {
-            const isOpen = openId === item.id;
-            return (
-              <motion.div
-                key={item.id}
-                variants={itemFadeUp}
-                className={`rounded-2xl transition-colors duration-300 border overflow-hidden ${
-                  isOpen
-                    ? 'bg-[#12121c] border-[#ccff00]/40 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
-                    : 'bg-[#0e0e14] border-white/10 hover:border-white/20'
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => toggleFaq(item.id)}
-                  className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ccff00] rounded-2xl cursor-pointer"
-                  aria-expanded={isOpen}
-                >
-                  <span className="font-display text-base sm:text-lg font-bold text-white pr-4">
-                    {item.question}
-                  </span>
-                  <motion.div
-                    animate={{ rotate: isOpen ? 180 : 0 }}
-                    transition={{ duration: 0.25, ease: EASINGS.smoothOut }}
-                    className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
-                      isOpen ? 'bg-[#ccff00] text-black' : 'bg-white/5 text-neutral-400'
-                    }`}
-                  >
-                    {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                  </motion.div>
-                </button>
-
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      key="content"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: EASINGS.smoothOut }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-6 pb-5 pt-1 text-xs sm:text-sm text-neutral-300 leading-relaxed border-t border-white/5">
-                        {item.answer}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            );
-          })}
+          {FAQ_DATA.map((item) => (
+            <FaqItemCard
+              key={item.id}
+              item={item}
+              isOpen={openId === item.id}
+              onToggle={() => toggleFaq(item.id)}
+            />
+          ))}
         </motion.div>
       </div>
     </section>
